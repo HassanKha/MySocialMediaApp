@@ -24,7 +24,7 @@ function SideNavigation() {
         <HomeIcon    className="mr-5" />
         <h1>Home</h1>
       </Link>
-      <Link href={"/profile/" + session.user.id} className="flex w-full hover:bg-[#FFECD1]  p-2 m-2 rounded-md cursor-pointer hover:scale-125 delay-250 transition">
+      <Link href={"/profile/" + session?.user?.id} className="flex w-full hover:bg-[#FFECD1]  p-2 m-2 rounded-md cursor-pointer hover:scale-125 delay-250 transition">
         <AccountBoxIcon   className="mr-5" />
         <h1>Profile</h1>
       </Link>

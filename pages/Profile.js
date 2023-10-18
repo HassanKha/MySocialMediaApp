@@ -20,7 +20,9 @@ console.log(router)
     
   }
   useEffect( ()=> {
+    if(router?.query?.id){
     getPosts()
+    }
     //getProfiles()
   }, [router])
   
