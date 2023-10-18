@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useRef } from "react";
+import React, { useState, useEffect , useRef, useCallback } from "react";
 import Image from "next/image";
 import Avatar from "@mui/material/Avatar";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
@@ -27,14 +27,23 @@ function ProfileCard({posts}) {
   const { pathname } = router;
   const session = useSession();
   const supabase = useSupabaseClient();
-  const FetchCurrentProfile = async () => {
+  // const FetchCurrentProfile = async () => {
+  //   const UserProfile = await supabase
+  //     .from("profiles")
+  //     .select()
+  //     .eq("id", userId);
+  //   console.log(UserProfile);
+  //   setprofile(UserProfile?.data?.[0]);
+  // };
+
+  const FetchCurrentProfile = useCallback(async () => {
     const UserProfile = await supabase
       .from("profiles")
       .select()
       .eq("id", userId);
     console.log(UserProfile);
-    setprofile(UserProfile.data[0]);
-  };
+    setprofile(UserProfile?.data?.[0]);
+  }, [userId, supabase]);
   useEffect(() => {
     if (!userId) {
       return;

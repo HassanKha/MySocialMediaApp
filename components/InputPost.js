@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext , useCallback } from "react";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MoodIcon from "@mui/icons-material/Mood";
@@ -20,15 +20,15 @@ function InputPost({ getPosts }) {
 
   const { profiles } = useContext(UserContext);
   //console.log(profiles, "con");
-  const selectcurrentuser = async () => {
-    const { data } = await supabase
-      .from("profiles")
-      .select()
-      .eq("id", session.user.id);
+  // const selectcurrentuser = async () => {
+  //   const { data } = await supabase
+  //     .from("profiles")
+  //     .select()
+  //     .eq("id", session.user.id);
 
-    setProfile(data[0]);
-    //console.log(data);
-  };
+  //   setProfile(data?.[0]);
+  //   //console.log(data);
+  // };
 
   const onPost = async (e) => {
     e.preventDefault();
@@ -61,6 +61,15 @@ function InputPost({ getPosts }) {
     }
   };
 //   https://coweuulizktfyvvrhhdb.supabase.co/storage/v1/object/public/files/1697381381635web.jpg
+const selectcurrentuser = useCallback(async () => {
+  const { data } = await supabase
+      .from("profiles")
+      .select()
+      .eq("id", session.user.id);
+
+    setProfile(data?.[0]);
+    //console.log(data);
+}, [session.user.id,supabase]);
   useEffect(() => {
     selectcurrentuser();
   }, [selectcurrentuser]);

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState , useCallback } from "react";
 import { Avatar } from "@mui/material";
 import Image from "next/image";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -48,11 +48,11 @@ function Post({ id, content, profile, created_at, photos }) {
     GetLikes();
     setDislike(true);
   };
-  const GetLikes = async () => {
-    const like = await supabase.from("likes").select().eq("postId", id);
+  // const GetLikes = async () => {
+  //   const like = await supabase.from("likes").select().eq("postId", id);
 
-    setlikes(like.data);
-  };
+  //   setlikes(like?.data);
+  // };
   
 
   const INSERTCOMMENT = async (e) => {
@@ -60,7 +60,7 @@ function Post({ id, content, profile, created_at, photos }) {
    // console.log(comment);
     const Insert = await supabase.from("posts").insert({
       content: comment,
-      author: MyProfile.id,
+      author: session?.user?.id,
       parentId: id,
     });
    // console.log( Insert , 'insert')
@@ -69,13 +69,27 @@ function Post({ id, content, profile, created_at, photos }) {
     
   };
 
-  const GETCOMMENTS = async () => {
+  // const GETCOMMENTS = async () => {
   
-   const Comments =  await supabase.from("posts").select('id , content , created_at , photos , profiles(id,avatar,name)').eq('parentId',id);
+  //  const Comments =  await supabase.from("posts").select('id , content , created_at , photos , profiles(id,avatar,name)').eq('parentId',id);
 
-   setfetchcommented(Comments.data)
-   //console.log(Comments)
-  };
+  //  setfetchcommented(Comments?.data)
+  //  //console.log(Comments)
+  // };
+
+  const GetLikes = useCallback(async () => {
+    const like = await supabase.from("likes").select().eq("postId", id);
+
+    setlikes(like?.data);
+  }, [ supabase]);
+
+  const GETCOMMENTS = useCallback(async () => {
+    const Comments =  await supabase.from("posts").select('id , content , created_at , photos , profiles(id,avatar,name)').eq('parentId',id);
+
+    setfetchcommented(Comments?.data)
+    //console.log(Comments)
+  }, [ supabase]);
+
   useEffect(() => {
     GetLikes();
     GETCOMMENTS();
@@ -144,7 +158,7 @@ function Post({ id, content, profile, created_at, photos }) {
         </IconButton>
         <IconButton className="flex items-center justify-center gap-2">
           <ChatBubbleOutlineIcon />
-          <h1>{fetchcommented.length}</h1>
+          <h1>{fetchcommented?.length}</h1>
         </IconButton>
         <IconButton className="flex items-center justify-center gap-2">
           <ShareOutlinedIcon />
@@ -192,7 +206,7 @@ function Post({ id, content, profile, created_at, photos }) {
 </div>
 
 <div className="flex-grow h-5 flex items-center border-s-2 p-1 text-sm">
-  <h1>{comment.content}</h1>
+  <h1>{comment?.content}</h1>
  
 </div>
 </div>
