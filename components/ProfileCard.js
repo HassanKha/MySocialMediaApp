@@ -41,7 +41,7 @@ function ProfileCard({posts}) {
     }
 
     FetchCurrentProfile();
-  }, [userId]);
+  }, [userId,FetchCurrentProfile]);
 
   const ChangeProfileCover = async (e) => {
     console.log(e.target.files?.[0]);
@@ -122,6 +122,7 @@ await supabase.from("profiles").update({
             !loading ? "opacity-0.1 blur-sm" : ""
           }  `}
           src={profile?.cover}
+          alt={profile?.cover}
         />
         {ismyuser && (
           <label

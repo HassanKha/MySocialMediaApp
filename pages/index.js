@@ -35,12 +35,12 @@ useEffect( ()=> {
   }
   getProfiles()
 
-}, [session?.user?.id])
+}, [session?.user?.id , getProfiles])
 
 useEffect( ()=> {
   getPosts()
   //getProfiles()
-}, [])
+}, [getPosts])
 
 
   if (!session) {

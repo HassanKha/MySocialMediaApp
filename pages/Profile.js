@@ -12,7 +12,7 @@ function Profile() {
   const [posts,setPosts] =useState([])
   const session = useSession();
 const router = useRouter();
-console.log(router)
+
   const getPosts = async () => {
     const {data} = await supabase.from('posts').select('id , content , created_at , photos , profiles(id,avatar,name)').is('parentId',null).eq('author',router?.query?.id).order('created_at',{ascending: false});
   //console.log(data)
@@ -23,8 +23,8 @@ console.log(router)
     if(router?.query?.id){
     getPosts()
     }
-    //getProfiles()
-  }, [router])
+
+  }, [router,getPosts])
   
 
   return (

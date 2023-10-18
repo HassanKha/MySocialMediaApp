@@ -53,10 +53,7 @@ function Post({ id, content, profile, created_at, photos }) {
 
     setlikes(like.data);
   };
-  useEffect(() => {
-    GetLikes();
-    GETCOMMENTS();
-  }, [likes, setlikes]);
+  
 
   const INSERTCOMMENT = async (e) => {
     e.preventDefault();
@@ -79,7 +76,10 @@ function Post({ id, content, profile, created_at, photos }) {
    setfetchcommented(Comments.data)
    //console.log(Comments)
   };
-
+  useEffect(() => {
+    GetLikes();
+    GETCOMMENTS();
+  }, [likes, setlikes , GetLikes , GETCOMMENTS]);
   const MyProfile = profiles?.find((pro)=> pro.id === session.user.id)
   const Likedbyme = likes?.find((like) => like.userId === profile.id);
   
@@ -123,6 +123,7 @@ function Post({ id, content, profile, created_at, photos }) {
                     key={photo}
                     src={photo}
                     alt={photo}
+                  
                   />
                 </div>
               ))}
@@ -174,7 +175,7 @@ function Post({ id, content, profile, created_at, photos }) {
       <div className="flex flex-col px-5 overflow-y-scroll border-t-2 py-1 w-full max-h-40 overflow-x-hidden ">
         {fetchcommented?.map((comment)=> (
 
-<div className="flex  items-center w-full py-2 px-1  border-2 rounded-2xl bg-slate-50 ">
+<div key={comment.id} className="flex  items-center w-full py-2 px-1  border-2 rounded-2xl bg-slate-50 ">
 <div>
   <Avatar
     sx={{ height: "40px", width: "40px" }}

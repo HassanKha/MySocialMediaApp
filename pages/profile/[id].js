@@ -1,9 +1,9 @@
 import React from "react";
 import Profile from "./../Profile";
 
-function id() {
+function Prof() {
   
   return <Profile />;
 }
 
-export default id;
+export default Prof;

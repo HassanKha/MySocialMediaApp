@@ -63,7 +63,7 @@ function InputPost({ getPosts }) {
 //   https://coweuulizktfyvvrhhdb.supabase.co/storage/v1/object/public/files/1697381381635web.jpg
   useEffect(() => {
     selectcurrentuser();
-  }, []);
+  }, [selectcurrentuser]);
  // console.log(uploads)
   return (
     <form className="flex sticky justify-center items-center flex-col  mt-10 p-3 shadow-sm shadow-[#141413] ">
